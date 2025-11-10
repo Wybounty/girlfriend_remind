@@ -37,9 +37,9 @@ class GirlfriendController extends Controller
             'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
             'surnom' => 'required|string|max:255',
-            'date_anniversaire' => 'required|date',
+            'date_anniversaire' => 'required|date|before_or_equal:today',
             'allergie' => 'required|string',
-            'date_rencontre' => 'required|date',
+            'date_rencontre' => 'required|date|before_or_equal:today',
             'nom_doudou' => 'required|string|max:255',
             'plat_prefere' => 'required|string|max:255',
         ]);
@@ -58,10 +58,14 @@ class GirlfriendController extends Controller
      */
     public function show(Girlfriend $girlfriend)
     {
+        // Charger le dernier avatar s'il existe
+        $latestAvatar = $girlfriend->pixelAvatars()->latest()->first();
+        
         return inertia('Girlfriend/Show', [
             'girlfriend' => $girlfriend->load('infos'),
             'age' => $girlfriend->age,
             'jours_ensemble' => $girlfriend->jours_ensemble,
+            'latestAvatar' => $latestAvatar,
         ]);
     }
 
@@ -84,9 +88,9 @@ class GirlfriendController extends Controller
             'prenom' => 'required|string|max:255',
             'nom' => 'required|string|max:255',
             'surnom' => 'required|string|max:255',
-            'date_anniversaire' => 'required|date',
+            'date_anniversaire' => 'required|date|before_or_equal:today',
             'allergie' => 'required|string',
-            'date_rencontre' => 'required|date',
+            'date_rencontre' => 'required|date|before_or_equal:today',
             'nom_doudou' => 'required|string|max:255',
             'plat_prefere' => 'required|string|max:255',
         ]);

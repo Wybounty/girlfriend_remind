@@ -90,7 +90,7 @@ class Girlfriend extends Model
      */
     public function getJoursEnsembleAttribute(): int
     {
-        return now()->diffInDays($this->date_rencontre);
+        return $this->date_rencontre->diffInDays(now());
     }
 
     /**
@@ -99,5 +99,13 @@ class Girlfriend extends Model
     public function infos(): HasMany
     {
         return $this->hasMany(GirlfriendInfo::class);
+    }
+
+    /**
+     * Relation avec les avatars pixel art.
+     */
+    public function pixelAvatars(): HasMany
+    {
+        return $this->hasMany(PixelAvatar::class);
     }
 }

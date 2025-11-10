@@ -24,10 +24,16 @@ interface Girlfriend {
     infos?: GirlfriendInfo[];
 }
 
+interface Avatar {
+    id: number;
+    avatar_type: string;
+}
+
 const props = defineProps<{
     girlfriend: Girlfriend;
     age: number;
     jours_ensemble: number;
+    latestAvatar?: Avatar | null;
 }>();
 
 const showDeleteModal = ref(false);
@@ -76,7 +82,18 @@ const formatDateLocal = (dateString: string): string => {
                 <h1 class="text-4xl font-bold text-primary flex-1">
                     💕 {{ girlfriend.prenom }} {{ girlfriend.nom }}
                 </h1>
-                <div class="flex gap-2">
+                <div class="flex gap-2 flex-wrap">
+                    <Link 
+                        v-if="latestAvatar"
+                        :href="`/girlfriends/${girlfriend.id}/pixel-avatar/${latestAvatar.id}`" 
+                        class="btn btn-primary btn-lg"
+                    >
+                        <span class="text-xl">👀</span>
+                        <span>Voir Avatar 3D</span>
+                    </Link>
+                    <Link :href="`/girlfriends/${girlfriend.id}/pixel-avatar/create`" class="btn btn-secondary">
+                        🎨 {{ latestAvatar ? 'Créer un nouveau' : 'Créer Avatar 3D' }}
+                    </Link>
                     <Link :href="route('girlfriends.edit', girlfriend.id)" class="btn btn-warning">
                         ✏️ Modifier
                     </Link>

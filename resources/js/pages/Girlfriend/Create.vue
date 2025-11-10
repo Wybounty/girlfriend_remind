@@ -97,6 +97,7 @@ const submit = () => {
                             <input 
                                 v-model="form.date_anniversaire" 
                                 type="date" 
+                                :max="new Date().toISOString().split('T')[0]"
                                 class="input input-bordered"
                                 :class="{ 'input-error': form.errors.date_anniversaire }"
                                 required
@@ -134,6 +135,7 @@ const submit = () => {
                             <input 
                                 v-model="form.date_rencontre" 
                                 type="date" 
+                                :max="new Date().toISOString().split('T')[0]"
                                 class="input input-bordered"
                                 :class="{ 'input-error': form.errors.date_rencontre }"
                                 required
